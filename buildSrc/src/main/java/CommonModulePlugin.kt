@@ -29,13 +29,13 @@ class CommonModulePlugin : Plugin<Project> {
                 compileSdkVersion(Versions.COMPILE_SDK)
 
                 compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_1_8
-                    targetCompatibility = JavaVersion.VERSION_1_8
+                    sourceCompatibility = JavaVersion.VERSION_11
+                    targetCompatibility = JavaVersion.VERSION_11
                 }
 
                 project.tasks.withType(KotlinCompile::class.java).configureEach {
                     kotlinOptions {
-                        jvmTarget = JavaVersion.VERSION_1_8.toString()
+                        jvmTarget = JavaVersion.VERSION_11.toString()
                     }
                 }
 
