@@ -14,7 +14,7 @@ android {
     compileSdk = Versions.COMPILE_SDK
 
     defaultConfig {
-        applicationId = "com.worldline.bootstrap"
+        applicationId = "com.demont.ldap"
         minSdk = Versions.MIN_SDK
         targetSdk = Versions.TARGET_SDK
         versionCode = Versions.CODE
@@ -108,8 +108,7 @@ android {
 val mockImplementation by configurations
 
 dependencies {
-    implementation(project(":presentation-compose")) // Switch between presentation and presentation-compose
-//    implementation(project(":presentation"))
+    implementation(project(":presentation"))
     implementation(project(":domain"))
     implementation(project(":data"))
     mockImplementation(project(":data-mock"))

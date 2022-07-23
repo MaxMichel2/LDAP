@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Base.AppTheme19 only defines what's new between Base.AppTheme19 and Base.AppTheme for API 19 -->
-    <style name="Base.AppTheme19" parent="Base.AppTheme" />
-
-    <!-- Do not modify Bootstrap -->
-    <style name="BootstrapTheme" parent="Base.AppTheme19" />
-</resources>
