@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.worldline.bootstrap.data.di">
+
+    <application android:networkSecurityConfig="@xml/network_security_config" />
+
+</manifest>

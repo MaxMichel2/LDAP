@@ -1,0 +1,53 @@
+android {
+    lintOptions {
+        abortOnError false
+        lintConfig file("${project.rootDir}/config/quality/lint/lint.xml")
+        htmlReport true
+        htmlOutput file("$project.buildDir/reports/lint/lint.html")
+        warningsAsErrors true
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.tags", "android"
+        property "sonar.java.binaries", "${project.buildDir}/tmp/kotlin-classes"
+
+        // Sonar init configuration
+        property "sonar.host.url", "https://kazan.myworldline.com/sonarqube/"
+        property "sonar.login", "600e6fb8af1f8b2c2f10d61c8a44b6de60842b81"
+        property "sonar.profile", "Android Kazan"
+        property "sonar.projectVersion", "${project.android.defaultConfig.versionName}"
+        // À mettre à jour à chaque version (versionCode)
+
+        // path to source directories (required)
+        property "sonar.sources", "src/main/java"
+        property "sonar.java.binaries", "${project.buildDir}/tmp/kotlin-classes"
+
+        // Unit tests
+        property "sonar.tests", "src/test/java"
+
+        // Some exclusions
+        property "sonar.coverage.exclusions", "**/databinding/**/*.*, **/android/databinding/*Binding.*, **/BR.*, **/R.*, **/R\$*.*, **/BuildConfig.*, **/Manifest*.*, **/*Module_*Factory.*"
+        property "sonar.exclusions", " **/databinding/**/*.*, **/android/databinding/*Binding.*, **/BR.*, **/R.*, **/R\$*.*,**/BuildConfig.*, '**/Manifest*.*, **/mockserver/**"
+
+        // Sonar configuration
+        //property "sonar.import_unknown_files", true
+        property "sonar.sourceEncoding", "UTF-8"
+
+        def unit = fileTree(dir: project.projectDir, includes: ['**/*.exec']).files
+        def ui = fileTree(dir: project.projectDir, includes: ['**/*.ec']).files
+        unit.addAll(ui)
+        def files = unit.join(", ")
+
+        // Reports
+        // SonarQube where the unit tests execution reports are
+        property "sonar.junit.reportsPath", "${project.buildDir}/test-results/testDebugUnitTest"
+        // SonarQube that the code coverage tool by unit tests is JaCoCo
+        property "sonar.java.coveragePlugin", "jacoco"
+        // SonarQube where the unit tests code coverage report is
+        property "sonar.jacoco.reportPaths", files
+        // Tells SonarQube where the integration tests code coverage report is
+        // property "sonar.jacoco.itReportPath", fileTree(dir: project.projectDir, includes: ['**/*.ec'])
+    }
+}

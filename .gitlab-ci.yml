@@ -1,0 +1,123 @@
+stages:
+  - build
+  - quality
+  - test
+  - deploy
+
+# For all tasks
+.android_template_standard: &android_job_definition
+  image: registry-scl-staging.svc.meshcore.net/kazan-mobile/awl-android-sdk:latest
+  tags:
+    - docker-L
+    - kazan-L
+  variables:
+    GRADLE_USER_HOME: "./gradle_cache/"
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"   # enable per-commit caching
+    paths:
+      - gradle_cache
+
+.android_template_small: &android_job_definition_small
+  <<: *android_job_definition
+  tags:
+    - docker-S
+    - kazan-S
+
+Compile:
+  <<: *android_job_definition
+  stage: build
+  script:
+    - ./gradlew :app:assembleRceDebug
+  artifacts:
+    paths:
+      - app/build/outputs/apk
+
+Lint:
+  <<: *android_job_definition
+  stage: quality
+  script:
+    - ./gradlew :app:lintRceRelease :common:lintRceRelease :data:lintRceRelease :domain:lintRceRelease :presentation:lintRceRelease :presentation-compose:lintRceRelease
+  artifacts:
+    paths:
+      - app/build/reports/lint
+      - common/build/reports/lint
+      - data/build/reports/lint
+      - domain/build/reports/lint
+      - presentation/build/reports/lint
+      - presentation-compose/build/reports/lint
+    expire_in: 1 day
+  needs: [ ]
+
+Detekt:
+  <<: *android_job_definition_small
+  stage: quality
+  script:
+    - ./gradlew detekt
+  artifacts:
+    when: on_failure
+    paths:
+      - app/build/reports/detekt
+      - common/build/reports/detekt
+      - data/build/reports/detekt
+      - domain/build/reports/detekt
+      - presentation/build/reports/detekt
+      - presentation-compose/build/reports/detekt
+    expire_in: 1 day
+  needs: [ ]
+
+Spotbugs:
+  <<: *android_job_definition_small
+  stage: quality
+  script:
+    - ./gradlew spotbugsRceDebug
+  artifacts:
+    when: on_failure
+    paths:
+      - app/build/reports/spotbugs
+      - common/build/reports/spotbugs
+      - data/build/reports/spotbugs
+      - domain/build/reports/spotbugs
+      - presentation/build/reports/spotbugs
+      - presentation-compose/build/reports/spotbugs
+    expire_in: 1 day
+  needs: [ ]
+
+Sonar:
+  <<: *android_job_definition
+  tags:
+    - docker-L
+    - kazan-L
+  stage: quality
+  when: manual
+  script:
+    - ./gradlew sonarqube
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - .gradle/wrapper
+      - .gradle/caches
+  needs: [ ]
+
+Unit Tests:
+  <<: *android_job_definition
+  stage: test
+  script:
+    - ./gradlew :app:testRceReleaseUnitTest :common:testRceReleaseUnitTest :data:testRceReleaseUnitTest :domain:testRceReleaseUnitTest :presentation:testRceReleaseUnitTest :presentation-compose:testRceReleaseUnitTest
+  artifacts:
+    paths:
+      - app/build/reports/tests/testReleaseUnitTest
+      - common/build/reports/tests/testReleaseUnitTest
+      - data/build/reports/tests/testRceReleaseUnitTest
+      - domain/build/reports/tests/testReleaseUnitTest
+      - presentation/build/reports/tests/testReleaseUnitTest
+      - presentation-compose/build/reports/tests/testReleaseUnitTest
+    expire_in: 1 day
+
+#Setup Firebase App Distribution then enable the task
+.Delivery App RCE Firebase App Distribution:
+  stage: deploy
+  script:
+    - ./gradlew clean :app:assembleRceRelease
+    - ./gradlew :app:appDistributionUploadRceRelease
+  environment: firebase_app_distribution
+  when: manual

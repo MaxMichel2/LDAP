@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LDAP.iml" filepath="$PROJECT_DIR$/.idea/modules/LDAP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/LDAP.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/LDAP.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/LDAP.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/LDAP.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/LDAP.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/LDAP.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/LDAP.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/LDAP.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LDAP.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/LDAP.buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LDAP.buildSrc.main.iml" filepath="$PROJECT_DIR$/.idea/modules/LDAP.buildSrc.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LDAP.buildSrc.test.iml" filepath="$PROJECT_DIR$/.idea/modules/LDAP.buildSrc.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/LDAP.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/LDAP.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/LDAP.common.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/common/LDAP.common.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/LDAP.common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/common/LDAP.common.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/LDAP.common.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/common/LDAP.common.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/LDAP.data.iml" filepath="$PROJECT_DIR$/.idea/modules/data/LDAP.data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-mock/LDAP.data-mock.iml" filepath="$PROJECT_DIR$/.idea/modules/data-mock/LDAP.data-mock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-mock/LDAP.data-mock.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/data-mock/LDAP.data-mock.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-mock/LDAP.data-mock.main.iml" filepath="$PROJECT_DIR$/.idea/modules/data-mock/LDAP.data-mock.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-mock/LDAP.data-mock.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/data-mock/LDAP.data-mock.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/LDAP.data.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/data/LDAP.data.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/LDAP.data.main.iml" filepath="$PROJECT_DIR$/.idea/modules/data/LDAP.data.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/LDAP.data.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/data/LDAP.data.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/LDAP.domain.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/LDAP.domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/LDAP.domain.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/LDAP.domain.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/LDAP.domain.main.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/LDAP.domain.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/LDAP.domain.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/LDAP.domain.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/presentation-compose/LDAP.presentation-compose.iml" filepath="$PROJECT_DIR$/.idea/modules/presentation-compose/LDAP.presentation-compose.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/presentation-compose/LDAP.presentation-compose.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/presentation-compose/LDAP.presentation-compose.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/presentation-compose/LDAP.presentation-compose.main.iml" filepath="$PROJECT_DIR$/.idea/modules/presentation-compose/LDAP.presentation-compose.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/presentation-compose/LDAP.presentation-compose.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/presentation-compose/LDAP.presentation-compose.unitTest.iml" />
+    </modules>
+  </component>
+</project>
