@@ -97,6 +97,7 @@ class PreferenceRepositoryImpl @Inject constructor(
             PreferenceKey.USERNAME -> USERNAME
             PreferenceKey.AUTHENTICATED -> AUTHENTICATED
             PreferenceKey.THEME -> THEME
+            PreferenceKey.CALLING_PHONE_NUMBER -> CALLING_PHONE_NUMBER
         }
     }
 
@@ -114,5 +115,7 @@ class PreferenceRepositoryImpl @Inject constructor(
          * [Theme.SYSTEM] or [Theme.BATTERY_SAVER] based on the OS version.
          */
         val THEME = stringPreferencesKey("theme")
+
+        val CALLING_PHONE_NUMBER = stringPreferencesKey("calling_phone_number")
     }
 }

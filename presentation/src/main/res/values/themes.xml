@@ -8,12 +8,12 @@
     </style>
 
     <!-- Do not modify IssuerTheme -->
-    <style name="BootstrapTheme" parent="Base.AppTheme" />
+    <style name="LDAPTheme" parent="Base.AppTheme" />
 
-    <style name="BootstrapTheme.SplashScreenTheme" parent="Theme.SplashScreen">
+    <style name="LDAPTheme.SplashScreenTheme" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
         <item name="windowSplashScreenAnimationDuration">600</item>
-        <item name="postSplashScreenTheme">@style/BootstrapTheme</item>
+        <item name="postSplashScreenTheme">@style/LDAPTheme</item>
     </style>
 </resources>

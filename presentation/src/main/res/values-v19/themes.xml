@@ -4,5 +4,5 @@
     <style name="Base.AppTheme19" parent="Base.AppTheme" />
 
     <!-- Do not modify Bootstrap -->
-    <style name="BootstrapTheme" parent="Base.AppTheme19" />
+    <style name="LDAPTheme" parent="Base.AppTheme19" />
 </resources>

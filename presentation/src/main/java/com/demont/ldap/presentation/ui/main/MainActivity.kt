@@ -1,43 +1,48 @@
 package com.demont.ldap.presentation.ui.main
 
+import android.app.role.RoleManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import com.demont.ldap.presentation.ui.BootstrapApp
 import com.demont.ldap.presentation.ui.splash.SplashViewModel
-import com.demont.ldap.presentation.util.extensions.updateForTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlinx.coroutines.launch
+import timber.log.Timber
 
-@OptIn(
-    ExperimentalAnimationApi::class,
-)
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var splashViewModel: SplashViewModel
 
-    private val viewModel: MainViewModel by viewModels()
-
     private val preDrawListener = ViewTreeObserver.OnPreDrawListener { false }
+
+    private val roleRequest =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                Timber.i("I am now the screening app")
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        updateForTheme(viewModel.currentTheme)
+        // TODO - Get user permissions on app start for: PHONE_STATE, CALL_LOG, INTERNET
 
         val splashScreen = installSplashScreen()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            requestRole()
+        }
 
         setContent {
             val state by splashViewModel.state.collectAsState()
@@ -46,20 +51,17 @@ class MainActivity : AppCompatActivity() {
                 state.isLoading
             }
 
-            BootstrapApp(
-                startRoute = state.startRoute
-            )
-        }
-
-        lifecycleScope.launch {
-            viewModel.theme
-                .flowWithLifecycle(lifecycle)
-                .collect { theme ->
-                    updateForTheme(theme)
-                }
+            BootstrapApp()
         }
 
         unblockDrawing()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun requestRole() {
+        val roleManager = getSystemService(ROLE_SERVICE) as RoleManager
+        val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_CALL_SCREENING)
+        roleRequest.launch(intent)
     }
 
     private fun unblockDrawing() {
