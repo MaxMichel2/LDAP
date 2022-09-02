@@ -6,16 +6,20 @@ import android.content.Intent
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.telephony.PhoneStateListener
 import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
 import android.widget.Toast
+import com.demont.ldap.domain.BuildConfig
 import java.util.concurrent.Executor
 import timber.log.Timber
 
 class LDAPBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        Timber.i("Broadcast receiver called")
+        if (BuildConfig.DEBUG) {
+            Timber.d("Broadcast receiver called")
+        }
         context?.let {
 
             val telephonyManager: TelephonyManager =
@@ -34,9 +38,15 @@ class LDAPBroadcastReceiver : BroadcastReceiver() {
                     executor,
                     object : TelephonyCallback(), TelephonyCallback.CallStateListener {
                         override fun onCallStateChanged(state: Int) {
-                            Timber.i("State: $state")
+                            Timber.d("State: $state")
                         }
                     }
+                )
+            } else {
+                val ldapPhoneStateListener = LDAPPhoneStateListener(context)
+                telephonyManager.listen(
+                    ldapPhoneStateListener,
+                    PhoneStateListener.LISTEN_CALL_STATE
                 )
             }
 
