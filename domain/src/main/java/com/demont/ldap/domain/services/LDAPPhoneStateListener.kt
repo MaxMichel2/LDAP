@@ -7,36 +7,45 @@ import android.os.Looper
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import com.demont.ldap.domain.BuildConfig
+import com.demont.ldap.domain.model.PreferenceKey
+import com.demont.ldap.domain.preferences.PreferenceRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class LDAPPhoneStateListener(context: Context) : PhoneStateListener() {
+@Suppress("CommentOverPrivateFunction", "CommentOverPrivateProperty")
+class LDAPPhoneStateListener(
+    context: Context,
+    repository: PreferenceRepository
+) : PhoneStateListener() {
     private var mContext: Context
+
+    private var mRepository: PreferenceRepository
 
     // Runnable which send a messages to the CallerService
     private var mOffhookShutdownMessageTask: Runnable
     private var mIdleShutdownMessageTask: Runnable
 
-    companion object {
+    private val scope = CoroutineScope(SupervisorJob())
 
-        /**
-         * Label for number Extras parameter.
-         */
-        val EXTRAS_NUMBER = "number"
+    companion object {
 
         /**
          * Label for call status Extras parameter.
          */
-        val EXTRAS_CALL_STATUS = "call_status"
-    }
+        const val EXTRAS_CALL_STATUS = "call_status"
 
-    /**
-     * Intent action.
-     */
-    private val LDAP_SHUTDOWN: String =
-        (this::class.java.`package`?.name) + "LDAP_SHUTDOWN"
+        /**
+         * Intent action.
+         */
+        private val LDAP_SHUTDOWN: String =
+            this::class.java.`package`?.name + "LDAP_SHUTDOWN"
+    }
 
     init {
         mContext = context
+        mRepository = repository
 
         mIdleShutdownMessageTask = Runnable {
             sendIdleShutdownMessage()
@@ -57,6 +66,10 @@ class LDAPPhoneStateListener(context: Context) : PhoneStateListener() {
                 if (BuildConfig.DEBUG) {
                     Timber.d("Ringing")
                     Timber.d("Number: $phoneNumber")
+                }
+
+                scope.launch {
+                    mRepository.updatePreference(PreferenceKey.CALLING_PHONE_NUMBER, phoneNumber)
                 }
             }
             TelephonyManager.CALL_STATE_OFFHOOK -> {

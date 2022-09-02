@@ -11,10 +11,17 @@ import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
 import android.widget.Toast
 import com.demont.ldap.domain.BuildConfig
+import com.demont.ldap.domain.preferences.PreferenceRepository
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
+import javax.inject.Inject
 import timber.log.Timber
 
+@AndroidEntryPoint
 class LDAPBroadcastReceiver : BroadcastReceiver() {
+
+    @Inject
+    lateinit var repository: PreferenceRepository
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (BuildConfig.DEBUG) {
@@ -43,7 +50,10 @@ class LDAPBroadcastReceiver : BroadcastReceiver() {
                     }
                 )
             } else {
-                val ldapPhoneStateListener = LDAPPhoneStateListener(context)
+                val ldapPhoneStateListener = LDAPPhoneStateListener(
+                    context = context,
+                    repository = repository
+                )
                 telephonyManager.listen(
                     ldapPhoneStateListener,
                     PhoneStateListener.LISTEN_CALL_STATE

@@ -45,24 +45,19 @@ class MainActivity : AppCompatActivity() {
                 val isGranted = entry.value
 
                 when (permission) {
-                    Manifest.permission.READ_PHONE_STATE -> {
-                        if (isGranted) {
-                            Timber.i("Phone permission granted")
-                        }
+                    Manifest.permission.READ_PHONE_STATE -> if (isGranted) {
+                        Timber.i("Phone permission granted")
                     }
-                    Manifest.permission.READ_CALL_LOG -> {
-                        if (isGranted) {
-                            Timber.i("Call log permission granted")
-                        }
+                    Manifest.permission.READ_CALL_LOG -> if (isGranted) {
+                        Timber.i("Call log permission granted")
                     }
-                    Manifest.permission.INTERNET -> {
-                        if (isGranted) {
-                            Timber.i("Internet permission granted")
-                        }
+                    Manifest.permission.INTERNET -> if (isGranted) {
+                        Timber.i("Internet permission granted")
                     }
-                    else -> {
-                        Timber.i("Something went wrong and not all permissions were granted OR some other permission was requested")
-                    }
+                    else -> Timber.i(
+                        "Something went wrong and not all permissions were " +
+                                "granted OR some other permission was requested"
+                    )
                 }
             }
         }
@@ -122,33 +117,27 @@ class MainActivity : AppCompatActivity() {
                 ActivityCompat.shouldShowRequestPermissionRationale(
                     this,
                     Manifest.permission.READ_PHONE_STATE
-                ) -> {
-                    Toast.makeText(
-                        this,
-                        "Phone permission required for this application to function",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+                ) -> Toast.makeText(
+                    this,
+                    "Phone permission required for this application to function",
+                    Toast.LENGTH_LONG
+                ).show()
                 ActivityCompat.shouldShowRequestPermissionRationale(
                     this,
                     Manifest.permission.INTERNET
-                ) -> {
-                    Toast.makeText(
-                        this,
-                        "Internet permission required for this application to function",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+                ) -> Toast.makeText(
+                    this,
+                    "Internet permission required for this application to function",
+                    Toast.LENGTH_LONG
+                ).show()
                 ActivityCompat.shouldShowRequestPermissionRationale(
                     this,
                     Manifest.permission.READ_CALL_LOG
-                ) -> {
-                    Toast.makeText(
-                        this,
-                        "Call log permission required for this application to function",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+                ) -> Toast.makeText(
+                    this,
+                    "Call log permission required for this application to function",
+                    Toast.LENGTH_LONG
+                ).show()
                 else -> permissionRequest.launch(
                     arrayOf(
                         Manifest.permission.READ_PHONE_STATE,
