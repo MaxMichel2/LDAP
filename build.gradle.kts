@@ -44,6 +44,10 @@ subprojects {
     apply(plugin = "com.github.ben-manes.versions")
     apply(plugin = "org.sonarqube")
 
+    tasks.withType<com.github.spotbugs.snom.SpotBugsTask> {
+        excludeFilter.set(file("$rootDir/spotbugs_exclude.xml"))
+    }
+
     configure<DetektExtension> {
         toolVersion = Plugins.Versions.DETEKT_GRADLE_PLUGIN
         source = files("$projectDir/src")

@@ -2,18 +2,16 @@ package com.demont.ldap.presentation.ui.splash
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.lifecycle.viewModelScope
-import com.demont.ldap.domain.business.preferences.GetAuthenticatedUseCase
 import com.demont.ldap.domain.di.IoDispatcher
-import com.demont.ldap.domain.model.onSuccess
-import com.demont.ldap.presentation.ui.NavGraphs
+import com.demont.ldap.domain.preferences.PreferenceRepository
 import com.demont.ldap.presentation.ui.base.BaseViewModel
 import com.demont.ldap.presentation.ui.base.Reducer
-import com.demont.ldap.presentation.ui.destinations.WelcomeScreenDestination
 import com.demont.ldap.presentation.ui.splash.SplashContract.SplashViewEffect
 import com.demont.ldap.presentation.ui.splash.SplashContract.SplashViewEvent
 import com.demont.ldap.presentation.ui.splash.SplashContract.SplashViewState
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +19,7 @@ import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
 class SplashViewModel @Inject constructor(
-    private val getAuthenticatedUseCase: GetAuthenticatedUseCase,
+    private val repository: PreferenceRepository,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : BaseViewModel<SplashViewState, SplashViewEvent, SplashViewEffect>() {
 
@@ -40,17 +38,9 @@ class SplashViewModel @Inject constructor(
 
         viewModelScope.launch(dispatcher) {
             sendEvent(SplashViewEvent.UpdateLoading(true))
-            getAuthenticatedUseCase(Unit).onSuccess { isAuthenticated ->
-                sendEvent(SplashViewEvent.UpdateLoading(false))
-                when (isAuthenticated) {
-                    true -> sendEvent(SplashViewEvent.UpdateStartDestination(NavGraphs.home))
-                    false -> sendEvent(
-                        SplashViewEvent.UpdateStartDestination(
-                            WelcomeScreenDestination
-                        )
-                    )
-                }
-            }
+            // TODO - Check if LDP connexion can be made via saved information (token or other)
+            delay(1000) // Temporary delay until connexion info can be provided
+            sendEvent(SplashViewEvent.UpdateLoading(false))
         }
     }
 
@@ -65,11 +55,6 @@ class SplashViewModel @Inject constructor(
                 is SplashViewEvent.UpdateLoading -> setState(
                     oldState.copy(
                         isLoading = event.isLoading
-                    )
-                )
-                is SplashViewEvent.UpdateStartDestination -> setState(
-                    oldState.copy(
-                        startRoute = event.destination
                     )
                 )
             }

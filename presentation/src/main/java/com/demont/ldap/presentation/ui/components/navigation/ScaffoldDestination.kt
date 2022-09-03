@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.LocalContentColor
@@ -26,7 +25,6 @@ import androidx.navigation.plusAssign
 import com.demont.ldap.presentation.ui.appCurrentDestinationAsState
 import com.demont.ldap.presentation.ui.destinations.Destination
 import com.demont.ldap.presentation.ui.startAppDestination
-import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import com.ramcosta.composedestinations.spec.Route
@@ -52,10 +50,6 @@ import com.ramcosta.composedestinations.spec.Route
  * using [verticalScroll], apply this modifier to the child of the scroll, and not on
  * the scroll itself.
  */
-@OptIn(
-    ExperimentalMaterialNavigationApi::class,
-    ExperimentalMaterial3Api::class
-)
 @Composable
 fun ScaffoldDestination(
     modifier: Modifier = Modifier,

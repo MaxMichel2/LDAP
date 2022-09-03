@@ -42,6 +42,9 @@ android {
 
     kotlin.sourceSets.all {
         languageSettings.optIn("kotlin.RequiresOptIn")
+        languageSettings.optIn("androidx.compose.animation.ExperimentalAnimationApi")
+        languageSettings.optIn("androidx.compose.material3.ExperimentalMaterial3Api")
+        languageSettings.optIn("com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi")
     }
 }
 
