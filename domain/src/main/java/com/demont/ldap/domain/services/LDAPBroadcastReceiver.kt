@@ -17,6 +17,7 @@ import java.util.concurrent.Executor
 import javax.inject.Inject
 import timber.log.Timber
 
+@SuppressWarnings("SS_SHOULD_BE_STATIC")
 @AndroidEntryPoint
 class LDAPBroadcastReceiver : BroadcastReceiver() {
 
