@@ -3,6 +3,7 @@ package com.demont.ldap.domain.services
 import android.os.Build
 import android.telecom.Call
 import android.telecom.CallScreeningService
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.demont.ldap.domain.model.PreferenceKey
 import com.demont.ldap.domain.preferences.PreferenceRepository
@@ -27,6 +28,7 @@ class LDAPScreeningService : CallScreeningService() {
         ) {
             val phoneNumber = callDetails.handle.schemeSpecificPart
             Timber.i("Number: $phoneNumber")
+            Toast.makeText(baseContext, "Phone number: $phoneNumber", Toast.LENGTH_LONG).show()
 
             scope.launch {
                 repository.updatePreference(PreferenceKey.CALLING_PHONE_NUMBER, phoneNumber)

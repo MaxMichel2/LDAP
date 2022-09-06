@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
+import android.widget.Toast
 import com.demont.ldap.domain.BuildConfig
 import com.demont.ldap.domain.model.PreferenceKey
 import com.demont.ldap.domain.preferences.PreferenceRepository
@@ -67,6 +68,8 @@ class LDAPPhoneStateListener(
                     Timber.d("Ringing")
                     Timber.d("Number: $phoneNumber")
                 }
+
+                Toast.makeText(mContext, "Phone number: $phoneNumber", Toast.LENGTH_LONG).show()
 
                 scope.launch {
                     mRepository.updatePreference(PreferenceKey.CALLING_PHONE_NUMBER, phoneNumber)
