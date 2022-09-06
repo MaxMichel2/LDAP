@@ -8,11 +8,12 @@ import androidx.annotation.RequiresApi
 import com.demont.ldap.domain.model.PreferenceKey
 import com.demont.ldap.domain.preferences.PreferenceRepository
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
+
 
 @RequiresApi(Build.VERSION_CODES.N)
 @AndroidEntryPoint
@@ -28,11 +29,21 @@ class LDAPScreeningService : CallScreeningService() {
         ) {
             val phoneNumber = callDetails.handle.schemeSpecificPart
             Timber.i("Number: $phoneNumber")
-            Toast.makeText(baseContext, "Phone number: $phoneNumber", Toast.LENGTH_LONG).show()
-
+            Timber.i(callDetails.toString())
+            //Toast.makeText(baseContext, "Phone number: $phoneNumber", Toast.LENGTH_LONG).show()
+            val callerName = when (phoneNumber) {
+                "+41763584146" ->  "WENDLINGER Damien"
+                "+41767773885"-> "DEMONT Christophe"
+                else -> "Inconnu"
+                }
+            for (i in 0..2) {
+                Toast.makeText(applicationContext, "Appel de: $callerName" , Toast.LENGTH_LONG).show()
+            }
             scope.launch {
                 repository.updatePreference(PreferenceKey.CALLING_PHONE_NUMBER, phoneNumber)
             }
+            val callRespond = CallResponse.Builder()
+            respondToCall(callDetails, callRespond.build())
         }
     }
 }
